@@ -39,6 +39,5 @@ export const addPesan = async (req, res) => {
     const decode = base64encode(JSON.stringify(a))
     res.status(200).json({ Data: decode });
   } catch (error) {
-
   }
 }
