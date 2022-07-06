@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   mysqldb:
-    image: mysql:5.7
+    image: mysql
     restart: unless-stopped
     env_file: ./.env
     environment:
@@ -11,18 +11,21 @@ services:
       - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
     volumes:
       - db:/var/lib/mysql
-  frontend_tiket:
-    container_name: frontend_tiket
-    build:
-      dockerfile: Dockerfile
-      context: ./frontend
-    volumes:
-      - ./frontend:/frontend
-    ports:
-      - 3000:3000
+  # frontend_tiket:
+  #   container_name: frontend_tiket
+  #   build:
+  #     dockerfile: Dockerfile
+  #     context: ./frontend
+  #   volumes:
+  #     - ./frontend:/frontend
+  #   ports:
+  #     - 3000:3000
+
   backend_tiket:
     container_name: backend_tiket
     restart: unless-stopped
+    depends_on:
+      - mysqldb
     env_file: ./.env
     build:
       dockerfile: Dockerfile
